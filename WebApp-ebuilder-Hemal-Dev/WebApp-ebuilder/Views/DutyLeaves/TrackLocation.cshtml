@@ -1,0 +1,116 @@
+﻿@model IEnumerable<WebApp_ebuilder.Models.tracking>
+
+@{
+    ViewBag.Title = "TrackLocation";
+}
+
+<h2>TrackLocation</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TRID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.longitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.latitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DLID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TRID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.longitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.latitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DLID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+@section scripts {
+
+    <body>
+
+        <h1>Location</h1>
+
+        <div id="googleMap" style="width:100%;height:400px;"></div>
+
+        <script>
+
+   
+            function myMap() {
+                var mapProp = { center: new google.maps.LatLng(6.7971, 79.9019), zoom: 18 };
+                var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+
+            var locations = [];
+    @foreach (var tracking in Model)
+    {
+        <text>
+            var location = new google.maps.LatLng(@tracking.latitude,@tracking.longitude);
+            locations.push(location);
+            var marker = new google.maps.Marker({
+                position: { lat: @tracking.latitude, lng: @tracking.longitude },
+                map: map
+            });
+            marker.setMap(map);
+
+    </text>
+    }
+    
+        
+        var flightPath = new google.maps.Polyline({
+                path: locations,
+                strokeColor: "#0000FF",
+                strokeOpacity: 0.8,
+                strokeWeight: 2
+            });
+
+
+           
+            flightPath.setMap(map);
+
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBewol6l7X97NUVa3LgVUXBPS9i9ThbRB4&callback=myMap"></script>
+
+        <!--
+        To use this code on your website, get a free API key from Google.
+        Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+        -->
+
+    </body>
+}_
+
+
+

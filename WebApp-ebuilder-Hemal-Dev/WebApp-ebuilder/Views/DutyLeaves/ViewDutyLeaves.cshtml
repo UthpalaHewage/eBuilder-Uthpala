@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebApp_ebuilder.Models.duty_leave>
+
+@{
+    ViewBag.Title = "ViewDutyLeaves";
+}
+
+<h2>ViewDutyLeaves</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DLID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.appointmentTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.location)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DLID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.appointmentTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.location)
+        </td>
+        <td>
+            @if (DateTime.Compare(item.date, DateTime.Today) >= 0)
+            {
+                @Html.ActionLink("Edit ", "Edit", new { /* id=item.PrimaryKey */ })
+               
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+
+            }
+
+               @Html.ActionLink("Track Details", "TrackLocation", new { dlid = item.DLID })
+           
+
+        </td>
+    </tr>
+}
+
+</table>
